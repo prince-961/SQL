@@ -1,0 +1,201 @@
+Database (bunch of tables) Queries
+
+ 1->  show databases;
+  2-> create database database_name;
+  3-> drop database database_name;
+  4-> use database_name;
+  5-> show database();  shows which database is currently in use
+
+=? What will happen if we drop the database which we are using and the we run the select database() command?
+Ans-> It will not NULL which means we are not using any database.
+
+Tables (True heart of SQL)
+
+DataTypes
+Numeric:- INT 
+String:- varchar(variable length chracter)
+
+SYNTAX:- (Creating Table)
+  1-> create table table_name (
+column_name dataType,
+column_name dataType
+);
+
+Eg:-->>
+CREATE TABLE cats(
+name VARCHAR(100), 
+age INT
+);
+
+  2->show tables;
+  3-> show columns from table_name; or DESC table_name; (describe)
+  4->DROP TABLE table_name; (deleting a table from database)
+
+INSERT
+ 
+1->> INSERT INTO cats(name, age)
+VALUES ('ndjn', 32);
+
+-->> Order of column matters
+INSERT INTO cats(age,name)
+VALUES (32,'ndjn');
+
+-->> Showing data
+Select * from cats;
+
+2->> Multiple Insert
+INSERT INTO cats(name, age)
+VALUES ('ndjn', 32)
+            ,('charlie', 10)
+           ,('sadie', 3);
+
+insert into cats(name) values('prince');
+select * from cats; // will insert null in place of age
+
+
+CREATE TABLE cats2(
+name VARCHAR(100) NOT NULL, 
+age INT NOT NULL
+);
+
+desc cats2;
+
+Insert  into cats2(name) values('Texas'); #o/p:- Error Code: 1364. Field 'age' doesn't have a default value
+
+
+-->> To set default values
+
+CREATE TABLE cats3 (
+name VARCHAR(20) DEFAULT 'no name provided',
+age INT DEFAULT 99
+);
+
+Desc cats3;
+insert into cats3(age) values(13);
+insert into cats3() values();
+insert into cats3(name, age) values('Montana',NULL); #i can still set value as null
+select * from cats3;
+
+
+CREATE TABLE cats4 (
+name VARCHAR(20) NOT NULL DEFAULT 'no name provided',
+age INT NOT NULL DEFAULT 99
+);
+insert into cats4(name, age) values('Montana',NULL); //Error Code: 1048. Column 'age' cannot be null
+
+==>>> Key (Primary key:- Unique identifier)
+CREATE TABLE unique_cats( cat_id INT NOT NULL,
+name VARCHAR(20),
+age INT,
+primary key (cat_id)
+);
+Desc unique_cats;
+insert into unique_cats(cat_id,name,age) values(1,'Fred',23);
+insert into unique_cats(cat_id,name,age) values(2,'Louis',13);
+insert into unique_cats(cat_id,name,age) values(1,'James',13);
+#Error Code: 1062. Duplicate entry '1' for key 'unique_cats.PRIMARY'
+#Manually entering id is not good approach
+select * from unique_cats;
+
+==>>> Auto Increment (Assigns id automatically)
+CREATE TABLE unique_cats2( cat_id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(20),
+age INT,
+primary key (cat_id)
+);
+DESC unique_cats2;
+insert into unique_cats2(name, age) values('Skippy',4);
+insert into unique_cats2(name, age) values('Jiff',5);
+insert into unique_cats2(name, age) values('Jiff',4);
+insert into unique_cats2(name, age) values('Jiff',2);
+insert into unique_cats2(name, age) values('Skippy',5);
+Select * from unique_cats2;
+
+
+==>>> there is no undo button after update
+==>> DELETE:- will only delete data from the table
+
+==>> source String_fxns.sql; // command to execute whole file at once
+1> concat(x,y,z) 
+2>concat_ws() // conact with seperator
+3>Substring(text, start, end)
+4> substr(text, start, end)
+5>replace(text,text to replace, new text)
+6>Upper()
+7>Lower()
+8> char_length()
+
+
+====>>>>Refining commands
+
+DISTINCT
+ORDER BY
+DESC
+LIMIT --> LIMIT 5 (top 5 results) Limit 1,5 (1-> starting row index, 5-> NUmber of records )
+LIKE ->>(%da%, da%, ______ (# 4 unserscores are there it will find stock quantity excatly 4 charachters long), 
+'%\%%' -->>> selects book title with % sign in the title name
+'%\_% --->>> selects book title with _ (underscore) sign in the title name
+%---->> Wildcards
+
+
+=====>>>> Aggregate functions
+-> COUNT
+-> GROUP BY (Summarizes or aggregates identical data into single rows)
+-> 
+
+
+
+
+=====PRIMARY KEY :-
+=====FOREIGN KEY :-
+
+
+
+1) What is Database?
+Ans:- A database is an organized collection of data, so that it can be easily accessed and managed.
+
+2) What is DBMS?
+Ans:- Database Management System (DBMS) is software for storing and retrieving users’ data while considering appropriate security 
+measures. It consists of a group of programs that manipulate the database. The DBMS accepts the request for data from an 
+application and instructs the operating system to provide the specific data. In large systems, a DBMS helps users and other
+ third-party software store and retrieve data.
+
+3) Why do we need DBMS?
+Ans:- 
+ I) Data Organization and Management:
+One of the primary needs for a DBMS is data organization and management. DBMSs allow data to be stored in a structured manner, 
+which helps in easier retrieval and analysis. 
+
+II) Data Security and Privacy:
+DBMSs provide a robust security framework that ensures the confidentiality, integrity, and availability of data. They offer 
+authentication and authorization features that control access to the database. DBMSs also provide encryption capabilities to 
+protect sensitive data from unauthorized access. 
+
+III) Data Integrity and Consistency:
+Data integrity and consistency are crucial for any database. DBMSs provide mechanisms that ensure the accuracy and 
+consistency of data. These mechanisms include constraints, triggers, and stored procedures that enforce data integrity rules.
+DBMSs also provide features like transactions that ensure that data changes are atomic, consistent, isolated, and durable (ACID).
+
+IV) Concurrent Data Access:
+A DBMS provides a concurrent access mechanism that allows multiple users to access the same data simultaneously.DBMSs 
+use locking mechanisms to ensure that multiple users can access the same data without causing conflicts or data corruption.
+
+V) Data Analysis and Reporting:
+DBMSs provide tools that enable data analysis and reporting. These tools allow organizations to extract useful insights from 
+their data, enabling better decision-making.
+
+VI)  Scalability and Flexibility:
+DBMSs provide scalability and flexibility, enabling organizations to handle increasing amounts of data. DBMSs can be scaled 
+horizontally by adding more servers or vertically by increasing the capacity of existing servers. This makes it easier for 
+organizations to handle large amounts of data without compromising performance.
+
+VII)Cost-Effectiveness:
+DBMSs are cost-effective compared to traditional file-based systems. They reduce storage costs by eliminating redundancy and
+ optimizing data storage. They also reduce development costs by providing tools for database design, maintenance, and
+ administration.
+
+4) File management system vs DBMS
+Ans:- https://www.javatpoint.com/dbms-vs-files-system
+
+5) 
+
